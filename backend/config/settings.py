@@ -10,22 +10,34 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+def get_csv_env(name, default):
+    value = os.getenv(name)
+    if not value:
+        return default
+
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-(ph@#nw77&*7#piw$qrh7t+%eode5g%2ub4c%g5@h4=!azjx=%'
+SECRET_KEY = os.getenv(
+    'DJANGO_SECRET_KEY',
+    'django-insecure-(ph@#nw77&*7#piw$qrh7t+%eode5g%2ub4c%g5@h4=!azjx=%',
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', 'true').lower() == 'true'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = get_csv_env('DJANGO_ALLOWED_HOSTS', [])
 
 
 # Application definition
@@ -123,9 +135,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-CORS_ALLOWED_ORIGINS = [
+CORS_ALLOWED_ORIGINS = get_csv_env('CORS_ALLOWED_ORIGINS', [
     "http://localhost:3000",
-]
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+])
 
 REST_FRAMEWORK = {
    "DEFAULT_PERMISSION_CLASSES": [
