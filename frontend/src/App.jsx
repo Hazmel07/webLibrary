@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 import {
   Box,
@@ -12,7 +11,28 @@ import SearchBar from "./components/SearchBar";
 import BookForm from "./components/BookForm";
 import BookCard from "./components/BookCard";
 
+import { createBook, deleteBookById, listBooks } from "./api/booksApi";
 import { pageBackground } from "./styles/theme";
+
+const addButtonStyle = {
+  padding: "14px 28px",
+  borderRadius: "14px",
+  border: "none",
+  background: "#3b82f6",
+  color: "white",
+  fontWeight: "bold",
+  cursor: "pointer",
+  fontSize: "16px",
+};
+
+const backButtonStyle = {
+  padding: "12px 22px",
+  borderRadius: "12px",
+  border: "none",
+  background: "#1e293b",
+  color: "white",
+  cursor: "pointer",
+};
 
 /* =========================
    HOME PAGE
@@ -30,16 +50,16 @@ function Home({
 }) {
   return (
     <Box sx={pageBackground}>
-      <Container maxWidth="md">
+      <Container maxWidth="md" sx={{ px: { xs: 0, sm: 3 } }}>
 
         {/* HEADER */}
-        <Box textAlign="center" mb={6}>
+        <Box sx={{ textAlign: "center", mb: { xs: 3, md: 5 } }}>
           <Typography
-            variant="h2"
+            variant="h3"
             fontWeight="bold"
             sx={{
               color: "white",
-              letterSpacing: "-2px",
+              letterSpacing: 0,
             }}
           >
             📚 Book Library
@@ -55,19 +75,11 @@ function Home({
           </Typography>
 
           {/* ADD BUTTON */}
-          <Box mt={4}>
+          <Box sx={{ mt: { xs: 2.5, md: 3 } }}>
             <button
+              type="button"
               onClick={() => setPage("add")}
-              style={{
-                padding: "14px 28px",
-                borderRadius: "14px",
-                border: "none",
-                background: "#3b82f6",
-                color: "white",
-                fontWeight: "bold",
-                cursor: "pointer",
-                fontSize: "16px",
-              }}
+              style={addButtonStyle}
             >
               ➕ Add Book
             </button>
@@ -85,16 +97,16 @@ function Home({
         />
 
         {/* BOOKS */}
-        <Stack spacing={3} mt={5}>
+        <Stack spacing={{ xs: 2, md: 2.5 }} sx={{ mt: { xs: 3, md: 4 } }}>
           {books.length === 0 ? (
             <Typography
               sx={{
                 color: "#94a3b8",
                 textAlign: "center",
-                mt: 5,
+                mt: { xs: 3, md: 4 },
               }}
             >
-              No books yet — add your first one 📚
+              No books yet, add your first one 📚
             </Typography>
           ) : (
             books.map((book) => (
@@ -116,8 +128,6 @@ function Home({
    APP ROOT
 ========================= */
 export default function App() {
-  const API_URL = "http://localhost:8000/api/books/";
-
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [books, setBooks] = useState([]);
@@ -155,24 +165,31 @@ export default function App() {
      FETCH
   ========================= */
   const fetchBooks = async () => {
-    const res = await axios.get(API_URL);
-    setBooks(res.data);
+    setBooks(await listBooks());
   };
 
   useEffect(() => {
-    fetchBooks();
+    let ignore = false;
+
+    async function loadBooks() {
+      const data = await listBooks();
+      if (!ignore) {
+        setBooks(data);
+      }
+    }
+
+    loadBooks();
+
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   /* =========================
      ADD
   ========================= */
   const addBook = async () => {
-    await axios.post(API_URL, {
-      ...form,
-      authors: form.authors
-        .split(",")
-        .map((a) => a.trim()),
-    });
+    await createBook(form);
 
     setForm({
       title: "",
@@ -204,7 +221,7 @@ export default function App() {
      DELETE
   ========================= */
   const deleteBook = async (id) => {
-    await axios.delete(`${API_URL}${id}/`);
+    await deleteBookById(id);
     fetchBooks();
   };
 
@@ -227,20 +244,14 @@ export default function App() {
         />
       ) : (
         <Box sx={pageBackground}>
-          <Container maxWidth="sm">
+          <Container maxWidth="sm" sx={{ px: { xs: 0, sm: 3 } }}>
 
             {/* BACK BUTTON */}
-            <Box mb={4}>
+            <Box sx={{ mb: { xs: 2.5, md: 3 } }}>
               <button
+                type="button"
                 onClick={() => setPage("home")}
-                style={{
-                  padding: "12px 22px",
-                  borderRadius: "12px",
-                  border: "none",
-                  background: "#1e293b",
-                  color: "white",
-                  cursor: "pointer",
-                }}
+                style={backButtonStyle}
               >
                 ← Back
               </button>

@@ -21,7 +21,7 @@ export const darkInput = {
 export const glassCard = {
   background: "rgba(255,255,255,0.08)",
   backdropFilter: "blur(18px)",
-  borderRadius: "24px",
+  borderRadius: "20px",
   border: "1px solid rgba(255,255,255,0.08)",
 };
 
@@ -29,5 +29,6 @@ export const pageBackground = {
   minHeight: "100vh",
   background:
     "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
-  py: 8,
+  px: { xs: 1.5, sm: 0 },
+  py: { xs: 4, md: 6 },
 };

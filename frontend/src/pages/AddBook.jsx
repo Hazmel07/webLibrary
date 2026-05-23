@@ -1,7 +1,17 @@
-import { Box, Container, Button } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BookForm from "../components/BookForm";
+import { pageBackground } from "../styles/theme";
+
+const backButtonStyle = {
+  padding: "12px 22px",
+  borderRadius: "12px",
+  border: "none",
+  background: "#1e293b",
+  color: "white",
+  cursor: "pointer",
+};
 
 export default function AddBook({ addBook }) {
   const navigate = useNavigate();
@@ -26,13 +36,17 @@ export default function AddBook({ addBook }) {
   };
 
   return (
-    <Box sx={{ minHeight: "100vh", background: "#0f172a", py: 6 }}>
-      <Container maxWidth="sm">
+    <Box sx={pageBackground}>
+      <Container maxWidth="sm" sx={{ px: { xs: 0, sm: 3 } }}>
 
-        <Box mb={3}>
-          <Button component={Link} to="/" variant="outlined">
+        <Box sx={{ mb: { xs: 2.5, md: 3 } }}>
+          <button
+            type="button"
+            onClick={() => navigate("/")}
+            style={backButtonStyle}
+          >
             ← Back
-          </Button>
+          </button>
         </Box>
 
         <BookForm

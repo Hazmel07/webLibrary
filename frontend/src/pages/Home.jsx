@@ -14,7 +14,7 @@ export default function Home({ books, deleteBook }) {
           📚 My Library
         </Typography>
 
-        <Box textAlign="center" mb={4}>
+        <Box sx={{ textAlign: "center", mb: 4 }}>
           <Button
             component={Link}
             to="/add"
