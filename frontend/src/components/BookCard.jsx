@@ -27,7 +27,9 @@ export default function BookCard({
       <CardContent
         sx={{
           display: "flex",
-          gap: 3,
+          gap: { xs: 2, sm: 2.5 },
+          p: { xs: 2, sm: 2.5 },
+          flexDirection: { xs: "column", sm: "row" },
         }}
       >
         {book.cover_url && (
@@ -36,15 +38,16 @@ export default function BookCard({
             src={book.cover_url}
             alt={book.title}
             sx={{
-              width: 100,
-              height: 150,
+              width: { xs: "100%", sm: 100 },
+              maxWidth: { xs: 180, sm: 100 },
+              height: { xs: 220, sm: 150 },
               objectFit: "cover",
-              borderRadius: "14px",
+              borderRadius: "12px",
             }}
           />
         )}
 
-        <Box flex={1}>
+        <Box sx={{ flex: 1 }}>
           <Typography
             variant="h5"
             fontWeight="bold"
@@ -56,7 +59,7 @@ export default function BookCard({
           <Typography
             sx={{
               color: "#94a3b8",
-              mb: 1,
+              mb: 0.75,
             }}
           >
             {book.authors?.join(", ")}
@@ -70,7 +73,7 @@ export default function BookCard({
           <Typography
             sx={{
               color: "#cbd5e1",
-              mt: 2,
+              mt: 1.5,
             }}
           >
             {book.description}
@@ -80,8 +83,8 @@ export default function BookCard({
             color="error"
             variant="outlined"
             sx={{
-              mt: 3,
-              borderRadius: "12px",
+              mt: 2,
+              borderRadius: "10px",
             }}
             onClick={() => deleteBook(book.id)}
           >

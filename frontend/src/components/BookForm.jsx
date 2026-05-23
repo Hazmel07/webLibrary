@@ -17,23 +17,24 @@ import { darkInput, glassCard } from "../styles/theme";
 export default function BookForm({ form, setForm, addBook }) {
   return (
     <Card sx={glassCard}>
-      <CardContent sx={{ p: 4 }}>
+      <CardContent sx={{ p: { xs: 2, sm: 2.75, md: 3 } }}>
 
         <Typography
           sx={{
             color: "white",
             fontWeight: "bold",
-            mb: 3,
+            mb: 2,
             fontSize: "1.3rem",
           }}
         >
           Add New Book
         </Typography>
 
-        <Stack spacing={3}>
+        <Stack spacing={{ xs: 1.75, md: 2 }}>
 
           {/* TITLE */}
           <TextField
+            fullWidth
             label="Title"
             value={form.title}
             onChange={(e) =>
@@ -44,6 +45,7 @@ export default function BookForm({ form, setForm, addBook }) {
 
           {/* AUTHORS */}
           <TextField
+            fullWidth
             label="Authors"
             value={form.authors}
             onChange={(e) =>
@@ -54,6 +56,7 @@ export default function BookForm({ form, setForm, addBook }) {
 
           {/* STATUS */}
           <TextField
+            fullWidth
             select
             label="Reading Status"
             value={form.status || "want_to_read"}
@@ -71,9 +74,10 @@ export default function BookForm({ form, setForm, addBook }) {
 
           {/* DESCRIPTION */}
           <TextField
+            fullWidth
             label="Description"
             multiline
-            rows={3}
+            rows={2}
             value={form.description}
             onChange={(e) =>
               setForm({
@@ -86,9 +90,10 @@ export default function BookForm({ form, setForm, addBook }) {
 
           {/* NOTES */}
           <TextField
+            fullWidth
             label="Personal Notes"
             multiline
-            rows={3}
+            rows={2}
             value={form.personal_notes}
             onChange={(e) =>
               setForm({
@@ -99,114 +104,132 @@ export default function BookForm({ form, setForm, addBook }) {
             sx={darkInput}
           />
 
-          {/* LANGUAGE */}
-          <TextField
-            label="Language"
-            value={form.language}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                language: e.target.value,
-              })
-            }
-            sx={darkInput}
-          />
-
-          {/* PAGE COUNT */}
-          <TextField
-            label="Page Count"
-            type="number"
-            value={form.page_count}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                page_count: e.target.value,
-              })
-            }
-            sx={darkInput}
-          />
-
-          {/* START DATE */}
-          <DatePicker
-            label="Started Reading"
-            value={form.started_at ? dayjs(form.started_at) : null}
-            onChange={(newValue) =>
-              setForm({
-                ...form,
-                started_at: newValue ? newValue.format("YYYY-MM-DD") : "",
-              })
-            }
-            slotProps={{
-               textField: {
-                fullWidth: true,
-                sx: {
-                  ...darkInput,
-
-                  "& .MuiOutlinedInput-root": {
-                    backgroundColor: "#0f172a",
-                    color: "white",
-                  },
-
-                  "& .MuiInputBase-input": {
-                    color: "white",
-                  },
-
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#334155",
-                  },
-
-                  "&:hover .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#475569",
-                  },
-
-                  "& .MuiSvgIcon-root": {
-                    color: "#94a3b8",
-                  },
-                },
-              },
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
+              gap: { xs: 1.75, md: 2 },
             }}
-          />
+          >
+            {/* LANGUAGE */}
+            <TextField
+              fullWidth
+              label="Language"
+              value={form.language}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  language: e.target.value,
+                })
+              }
+              sx={darkInput}
+            />
 
-          {/* FINISH DATE */}
-          <DatePicker
-            label="Finished Reading"
-            value={form.finished_at ? dayjs(form.finished_at) : null}
-            onChange={(newValue) =>
-              setForm({
-                ...form,
-                finished_at: newValue ? newValue.format("YYYY-MM-DD") : "",
-              })
-            }
-            slotProps={{
-            textField: {
-              fullWidth: true,
-              sx: {
-                ...darkInput,
+            {/* PAGE COUNT */}
+            <TextField
+              fullWidth
+              label="Page Count"
+              type="number"
+              value={form.page_count}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  page_count: e.target.value,
+                })
+              }
+              sx={darkInput}
+            />
+          </Box>
 
-                "& .MuiOutlinedInput-root": {
-                  backgroundColor: "#0f172a",
-                  color: "white",
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
+              gap: { xs: 1.75, md: 2 },
+            }}
+          >
+            {/* START DATE */}
+            <DatePicker
+              label="Started Reading"
+              value={form.started_at ? dayjs(form.started_at) : null}
+              onChange={(newValue) =>
+                setForm({
+                  ...form,
+                  started_at: newValue ? newValue.format("YYYY-MM-DD") : "",
+                })
+              }
+              slotProps={{
+                textField: {
+                  fullWidth: true,
+                  sx: {
+                    ...darkInput,
+
+                    "& .MuiOutlinedInput-root": {
+                      backgroundColor: "#0f172a",
+                      color: "white",
+                    },
+
+                    "& .MuiInputBase-input": {
+                      color: "white",
+                    },
+
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#334155",
+                    },
+
+                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#475569",
+                    },
+
+                    "& .MuiSvgIcon-root": {
+                      color: "#94a3b8",
+                    },
+                  },
                 },
+              }}
+            />
 
-                "& .MuiInputBase-input": {
-                  color: "white",
-                },
+            {/* FINISH DATE */}
+            <DatePicker
+              label="Finished Reading"
+              value={form.finished_at ? dayjs(form.finished_at) : null}
+              onChange={(newValue) =>
+                setForm({
+                  ...form,
+                  finished_at: newValue ? newValue.format("YYYY-MM-DD") : "",
+                })
+              }
+              slotProps={{
+                textField: {
+                  fullWidth: true,
+                  sx: {
+                    ...darkInput,
 
-                "& .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#334155",
-                },
+                    "& .MuiOutlinedInput-root": {
+                      backgroundColor: "#0f172a",
+                      color: "white",
+                    },
 
-                "&:hover .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#475569",
-                },
+                    "& .MuiInputBase-input": {
+                      color: "white",
+                    },
 
-                "& .MuiSvgIcon-root": {
-                  color: "#94a3b8",
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#334155",
+                    },
+
+                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#475569",
+                    },
+
+                    "& .MuiSvgIcon-root": {
+                      color: "#94a3b8",
+                    },
+                  },
                 },
-              },
-            },
-          }}
-          />
+              }}
+            />
+          </Box>
 
           {/* RATING */}
           <Box>
@@ -228,8 +251,9 @@ export default function BookForm({ form, setForm, addBook }) {
             size="large"
             onClick={addBook}
             sx={{
-              py: 1.7,
-              borderRadius: "16px",
+              mt: 0.5,
+              py: 1.35,
+              borderRadius: "14px",
               fontWeight: "bold",
               background:
                 "linear-gradient(135deg,#3b82f6,#2563eb)",

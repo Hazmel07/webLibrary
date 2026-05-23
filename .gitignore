@@ -1,0 +1,33 @@
+# Editor directories and files
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# Node
+node_modules/
+dist/
+dist-ssr/
+
+# Logs and local config
+.playwright-mcp/
+.env
+.env.*
+!.env.example
+!frontend/.env.example
+logs/
+*.log
+*.local

@@ -14,7 +14,7 @@ export default function SearchBar({
   searchBooks,
 }) {
   return (
-    <Box sx={{ position: "relative", mb: 4 }}>
+    <Box sx={{ position: "relative", mb: { xs: 2.5, md: 3 } }}>
       <TextField
         fullWidth
         label="Smart search books..."
@@ -23,7 +23,7 @@ export default function SearchBar({
         sx={{
           "& .MuiOutlinedInput-root": {
             background: "rgba(255,255,255,0.08)",
-            borderRadius: "18px",
+            borderRadius: "16px",
             color: "white",
           },
 
@@ -40,7 +40,7 @@ export default function SearchBar({
             position: "absolute",
             width: "100%",
             mt: 1,
-            borderRadius: "18px",
+            borderRadius: "16px",
             overflow: "hidden",
             background: "rgba(15,23,42,0.96)",
             maxHeight: 320,
